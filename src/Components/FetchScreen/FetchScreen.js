@@ -2,7 +2,7 @@ import {React, useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Schema from '../../mdz_pb';
-import {BACKENDSERVER, stompClient, _arrayBufferToBase64, _base64ToArrayBuffer} from '../../App';
+import {BACKENDSERVER, _base64ToArrayBuffer} from '../../App';
 import './FetchScreen.css';
 function FetchScreen() {
     const [types, setTypes] = useState('CSV');

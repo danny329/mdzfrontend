@@ -1,13 +1,13 @@
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
-import {useState} from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Header from './Components/Header/Header';
 import Personform from './Components/Personform/Personform';
 import FetchScreen from './Components/FetchScreen/FetchScreen';
 import UpdatePerson from './Components/UpdatePerson/UpdatePerson';
-export const BACKENDSERVER = 'https://mdzbackend.azurewebsites.net';
+// export const BACKENDSERVER = 'https://mdzbackend.azurewebsites.net';
+export const BACKENDSERVER = 'http://127.0.0.1:8080';
 export var stompClient = null;
 const SOCKET_URL = `${BACKENDSERVER}/handler`;
 export function _arrayBufferToBase64( buffer ) {
@@ -29,7 +29,6 @@ export function _base64ToArrayBuffer(base64) {
   return bytes.buffer;
 }
 function App() {
-  const [clientConnected, setclientConnected] = useState(false);
   
   var sock = new SockJS(SOCKET_URL);
   stompClient = Stomp.over(sock);
@@ -39,16 +38,6 @@ function App() {
     console.log('err',err)
   });
  
-
- 
-  const clickHandler = () =>{
-    try {
-      stompClient.send("/app/persons", {}, JSON.stringify({id:1,name:'daniel',dob:'1996-03-30',salary:87955.00,age:27}));
-      return true;
-    } catch(e) {
-      return false;
-    }
-  }
   return (
     <Router>
       <div className="App">

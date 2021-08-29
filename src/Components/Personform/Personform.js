@@ -1,9 +1,9 @@
-import {React, useState, useEffect} from 'react';
+import {React} from 'react';
 import moment from 'moment';
 import './Personform.css';
 import Schema from '../../mdz_pb';
 import swal from 'sweetalert';
-import {BACKENDSERVER, stompClient, _arrayBufferToBase64, _base64ToArrayBuffer} from '../../App';
+import {stompClient, _arrayBufferToBase64, _base64ToArrayBuffer} from '../../App';
 function Personform() {
    
     const SubmitHandler = e =>{
@@ -15,7 +15,7 @@ function Personform() {
         let Message = document.querySelector('#Message');
         let FileType = document.querySelector('#FileType');
         console.log(FileType)
-        if(Number(Age.value) != moment().local().diff(moment(Dob.value).local(),"years")){
+        if(Number(Age.value) !== moment().local().diff(moment(Dob.value).local(),"years")){
             Message.innerHTML = 'Age and Dob mismatch.';
         }
         else{
@@ -43,7 +43,7 @@ function Personform() {
     };
 
     setTimeout(()=>{
-        const reciever = stompClient.subscribe('/topic/persons', function (data) {
+        stompClient.subscribe('/topic/persons', function (data) {
             let bytearrayvalue = _base64ToArrayBuffer(data.body)
             const persons = Schema.ResponsePerson.deserializeBinary(bytearrayvalue);
             swal("Added successfully!", `${persons.getId()}`, "success");

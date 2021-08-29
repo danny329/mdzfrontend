@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from 'react';
+import {React} from 'react';
 import {useParams} from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
@@ -10,38 +10,33 @@ function UpdatePerson() {
     let { filename } = useParams();
     let types = filename.substring(filename.lastIndexOf('.')+1, filename.length);
 
-    useEffect(() => {
-        console.log(types, filename)
-        const headers = {
-            'Content-Type': 'application/x-protobuf',
-            'fileType': types
-        }    
-        axios.get(`${BACKENDSERVER}/api/persons/${filename}`, {
-            headers: headers
-        })
-        .then((response) => {
-            let bytearrayvalue = _base64ToArrayBuffer(response.data)
-            const person  = Schema.Person.deserializeBinary(bytearrayvalue);
-            console.log(person)
-            let Name = document.querySelector('#Name');
-            let Dob = document.querySelector('#Dob');
-            let Age = document.querySelector('#Age');
-            let Salary = document.querySelector('#Salary');
-            let FileType = document.querySelector('#FileType');
-            
-            Name.value = person.getName();
-            Dob.value = person.getDob();
-            Age.value = person.getAge();
-            Salary.value = person.getSalary();
-            FileType.value = types;
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-        return () => {
-            // cleanup
-        }
-    }, [])
+    const headers = {
+        'Content-Type': 'application/x-protobuf',
+        'fileType': types
+    }    
+    axios.get(`${BACKENDSERVER}/api/persons/${filename}`, {
+        headers: headers
+    })
+    .then((response) => {
+        let bytearrayvalue = _base64ToArrayBuffer(response.data)
+        const person  = Schema.Person.deserializeBinary(bytearrayvalue);
+        console.log(person)
+        let Name = document.querySelector('#Name');
+        let Dob = document.querySelector('#Dob');
+        let Age = document.querySelector('#Age');
+        let Salary = document.querySelector('#Salary');
+        let FileType = document.querySelector('#FileType');
+        
+        Name.value = person.getName();
+        Dob.value = person.getDob();
+        Age.value = person.getAge();
+        Salary.value = person.getSalary();
+        FileType.value = types;
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+    
     const updateHandler = e =>{
         e.preventDefault();
         let Name = document.querySelector('#Name');
@@ -50,7 +45,7 @@ function UpdatePerson() {
         let Salary = document.querySelector('#Salary');
         let Message = document.querySelector('#Message');
         
-        if(Number(Age.value) != moment().local().diff(moment(Dob.value).local(),"years")){
+        if(Number(Age.value) !== moment().local().diff(moment(Dob.value).local(),"years")){
             Message.innerHTML = 'Age and Dob mismatch.';
         }
         else{
@@ -78,7 +73,7 @@ function UpdatePerson() {
     };
 
     setTimeout(()=>{
-        const reciever = stompClient.subscribe('/topic/person', function (data) {
+        stompClient.subscribe('/topic/person', function (data) {
             let bytearrayvalue = _base64ToArrayBuffer(data.body)
             const persons = Schema.ResponsePerson.deserializeBinary(bytearrayvalue);
             swal("Updated successfully!", `${persons.getId()}`, "success");
