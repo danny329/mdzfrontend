@@ -7,7 +7,7 @@ import Header from './Components/Header/Header';
 import Personform from './Components/Personform/Personform';
 import FetchScreen from './Components/FetchScreen/FetchScreen';
 import UpdatePerson from './Components/UpdatePerson/UpdatePerson';
-export const BACKENDSERVER = 'http://127.0.0.1:8080';
+export const BACKENDSERVER = 'https://mdzbackend.azurewebsites.net';
 export var stompClient = null;
 const SOCKET_URL = `${BACKENDSERVER}/handler`;
 export function _arrayBufferToBase64( buffer ) {
