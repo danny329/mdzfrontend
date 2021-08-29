@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+message Person{
+    string Name = 1;
+    string Dob = 2;
+    double Salary = 3;
+    int32 Age = 4;
+}
+
+message ResponsePerson{
+    string Id = 1;
+    string Name = 2;
+    string Dob = 3;
+    double Salary = 4;
+    int32 Age = 5;
+}
+
+message ListOfFiles{
+    repeated string Filename = 1;
+}

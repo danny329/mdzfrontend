@@ -1,0 +1,47 @@
+.fetchscreenwrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    background: aliceblue;
+    height: 100%;
+}
+.fstitle{
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+.itemwrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 10px;
+    margin: 2px;
+    background: aquamarine;
+    width: 100%;
+    text-align: center;
+    align-items: stretch;
+    justify-content: center;
+}
+.itemwrapper:hover{
+    background-color: blanchedalmond;
+}
+
+.linka{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 5px;
+    margin: 0px;
+    width: 5%;
+    border-radius: 10%;
+}
+.itemp{
+    margin: 0px;
+}
+.selection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0px;
+}
